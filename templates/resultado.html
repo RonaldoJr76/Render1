@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado da Prova</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .result-box { background-color: #e9f7ef; border: 1px solid #c3e6cb; border-radius: .5rem; padding: 1.5rem; }
+        .correct-answer { background-color: #d4edda; border-color: #c3e6cb; }
+        .incorrect-answer { background-color: #f8d7da; border-color: #f5c6cb; }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white text-center">
+                <h2>🎉 Resultado da Sua Avaliação</h2>
+            </div>
+            <div class="card-body">
+                
+                <div class="result-box text-center mb-4">
+                    <h3 class="text-success">Você Acertou: {{ acertos }} / {{ total }}</h3>
+                    <p class="lead">Percentual de Acerto: <strong>{{ percentual }}</strong></p>
+                </div>
+                
+                <h4 class="mb-3 text-primary">Detalhes por Questão</h4>
+                
+                <ul class="list-group">
+                    {% for i in range(1, total + 1) %}
+                        {% set q_key = 'q' + i|string %}
+                        {% set aluno_resp = respostas_aluno.get(q_key, 'N/A')|upper %}
+                        {% set oficial_resp = gabarito_oficial.get(q_key, 'N/A')|upper %}
+                        
+                        {% if aluno_resp == oficial_resp %}
+                            {% set card_class = 'list-group-item correct-answer' %}
+                            {% set icon = '✅' %}
+                        {% else %}
+                            {% set card_class = 'list-group-item incorrect-answer' %}
+                            {% set icon = '❌' %}
+                        {% endif %}
+                        
+                        <li class="{{ card_class }} d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <strong>{{ icon }} Questão {{ i }}:</strong>
+                                Você marcou <span class="badge bg-primary">{{ aluno_resp }}</span>.
+                            </div>
+                            <div>
+                                Resposta Correta: <span class="badge bg-dark">{{ oficial_resp }}</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+                
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">Voltar ao Início</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

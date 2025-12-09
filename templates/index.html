@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova Online - Início</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .jumbotron { 
+            background-color: #ffffff; 
+            padding: 3rem 2rem; 
+            border-radius: .5rem; 
+            box-shadow: 0 4px 8px rgba(0,0,0,.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="jumbotron text-center">
+            <h1 class="display-4 text-primary">📝 Prova de Avaliação Online</h1>
+            <p class="lead">Passo 1: Baixe a prova | Passo 2: Preencha seu nome | Passo 3: Envie o Gabarito</p>
+            <hr class="my-4">
+            
+            <a href="{{ url_for('download_prova', filename=prova_filename) }}" class="btn btn-success btn-lg mb-4" download>
+                <i class="fas fa-download"></i> Baixar Arquivo da Prova (PDF)
+            </a>
+
+            <div class="card p-4 mx-auto" style="max-width: 500px;">
+                <form action="{{ url_for('index') }}" method="post">
+                    <h4 class="card-title text-dark mb-3">Identificação do Aluno</h4>
+                    <div class="mb-3">
+                        <label for="nome_aluno" class="form-label text-start d-block">Nome Completo:</label>
+                        <input type="text" class="form-control" id="nome_aluno" name="nome_aluno" required placeholder="Ex: João da Silva">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        <i class="fas fa-edit"></i> Iniciar Gabarito Online
+                    </button>
+                </form>
+            </div>
+            
+            <p class="text-muted mt-3">Atenção: A prova deve ser resolvida antes de preencher o gabarito.</p>
+        </div>
+    </div>
+    <div class="text-center mt-5">
+        <small><a href="{{ url_for('admin_notas') }}" class="text-secondary">Acesso Professor: Ver Notas</a></small>
+    </div>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

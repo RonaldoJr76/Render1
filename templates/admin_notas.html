@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração de Notas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .header-admin { background-color: #343a40; color: white; padding: 1.5rem; border-radius: .5rem .5rem 0 0; }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="header-admin text-center">
+                <h2>📋 Relatório de Notas dos Alunos</h2>
+            </div>
+            <div class="card-body">
+                {% if resultados %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nome do Aluno</th>
+                                    <th>Acertos</th>
+                                    <th>Total de Questões</th>
+                                    <th>Percentual (%)</th>
+                                    <th>Data de Envio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for resultado in resultados %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td><strong>{{ resultado.nome_aluno }}</strong></td>
+                                    <td>{{ resultado.acertos }}</td>
+                                    <td>{{ resultado.total_questoes }}</td>
+                                    <td><span class="badge bg-{% if resultado.percentual >= 70 %}success{% elif resultado.percentual >= 50 %}warning{% else %}danger{% endif %}">{{ resultado.percentual|round(2) }}%</span></td>
+                                    <td>{{ resultado.data_envio }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="alert alert-warning text-center">
+                        Nenhuma nota foi registrada ainda.
+                    </div>
+                {% endif %}
+
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('index') }}" class="btn btn-secondary">Voltar à Página Inicial</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
